@@ -1,0 +1,23 @@
+<h1>{{ username }} - Book Collection</h1>
+<div class="elevated-container mat-elevation-z8">
+    <div class="loading-shade" *ngIf="loading">
+        <mat-spinner *ngIf="loading"></mat-spinner>
+    </div>
+    <mat-form-field>
+        <mat-select [value]="menuOptions[0].value" placeholder="Choose books to display." (selectionChange)="displayBooks($event)">
+            <mat-option *ngFor="let option of menuOptions" [value]="option.value">
+            {{ option.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-card *ngIf="shownUserBooks">
+        <div *ngIf="shownUserBooks.length === 0">
+            <p *ngIf="shownUserBooks.length === 0">No books found in your library!</p>
+            <p class='anchored' [routerLink]="['/scan']">How about adding a new book?</p>
+        </div>
+        <div *ngFor="let ub of shownUserBooks; let i = index">
+            <a [routerLink]="['/library', ub.book.id]">{{ ub.book.title }} - {{ ub.book.author }}</a>
+            <button (click)="deleteBook(i)">Delete</button>
+        </div>
+    </mat-card>
+</div>

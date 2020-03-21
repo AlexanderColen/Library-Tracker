@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container {
+    margin-left: 25vw;
+    margin-right: 25vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.container > * {
+    width: 100%;
+}
+
+button {
+    height: 40px;
+}
+
+.elevated-container {
+    position: relative;
+    padding: 5px;
+}
+
+.anchored {
+    color: blue;
+    text-decoration: underline;
+}
+
+.anchored:hover {
+    color: rgb(2, 2, 201);
+    cursor: pointer;
+}

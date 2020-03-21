@@ -1,0 +1,22 @@
+<h1>Scan Barcode</h1>
+<div class="elevated-container mat-elevation-z8">
+    <div class="loading-shade" *ngIf="loading">
+        <mat-spinner *ngIf="loading"></mat-spinner>
+    </div>
+    <mat-card>
+        <input mat-input id="barcodeInput" type="file" (change)="decodeImage($event)" capture #barcodeInput/>
+        <button mat-raised-button color="primary" (click)="barcodeInput.click()">Scan Barcode</button>
+        <p>Or search below</p>
+        <input mat-input type="text" name="search" [(ngModel)]="searchCriteria" (keyup)="onSearchKeyUp()" (keydown.enter)="onSearchKeyUp()" placeholder="Enter Search Criteria">
+    </mat-card>
+    <div *ngIf="foundBooks">
+        <mat-card class="card-book" (click)="addBook(i, 'OWNED')" *ngFor="let b of foundBooks; let i = index">
+            <p><b>ISBN:</b> {{ b.isbn }}</p>
+            <p><b>Title:</b> {{ b.title }}</p>
+            <p><b>Author:</b> {{ b.author }}</p>
+            <p>{{ b.pages }} Pages</p>
+            <img [src]="b.image" alt="Book Cover Image">
+            <button mat-raised-button color="accent">Add Book</button>
+        </mat-card>
+    </div>
+</div>

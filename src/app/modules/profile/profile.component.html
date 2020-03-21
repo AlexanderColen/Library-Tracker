@@ -1,0 +1,10 @@
+<h1 *ngIf="username">Profile - {{ username }}</h1>
+<h1 *ngIf="!username">Profile</h1>
+<div class="elevated-container mat-elevation-z8">
+    <div class="loading-shade" *ngIf="loading">
+        <mat-spinner *ngIf="loading"></mat-spinner>
+    </div>
+    <mat-card *ngIf="username">
+        <p>Username: {{ username }}</p>
+    </mat-card>
+</div>
