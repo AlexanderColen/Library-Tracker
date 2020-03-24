@@ -1,3 +1,14 @@
 #barcodeInput {
     display: none;
 }
+
+#buttonMenu {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+
+    button {
+        margin-bottom: 1vh;
+        margin-right: 1vw;
+    }
+}

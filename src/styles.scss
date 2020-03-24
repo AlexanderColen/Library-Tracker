@@ -17,6 +17,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 button {
     height: 40px;
+    text-transform: uppercase;
+
+    mat-icon {
+        margin-right: 4px;
+    }
 }
 
 .elevated-container {

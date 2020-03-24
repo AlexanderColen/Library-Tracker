@@ -1,18 +1,32 @@
 <mat-sidenav-container class="side-navigation-menu">
     <mat-sidenav #sidenav mode="over" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')">
         <ul>
-            <li *ngIf="!authService.isLoggedIn"><button mat-flat-button color="primary" (click)="navigate('login')">Login</button></li>
-            <li *ngIf="!authService.isLoggedIn"><button mat-flat-button color="primary" (click)="navigate('register')">Register</button></li>
-            <li *ngIf="authService.isLoggedIn"><button mat-flat-button color="primary" (click)="navigate('profile')">Profile</button></li>
-            <li *ngIf="authService.isLoggedIn"><button mat-flat-button color="primary" (click)="navigate('library')">Library</button></li>
-            <li *ngIf="authService.isLoggedIn"><button mat-flat-button color="primary" (click)="navigate('scan')">Scan</button></li>
-            <li *ngIf="authService.isLoggedIn"><button mat-flat-button color="accent" (click)="openLogoutDialog()">Logout</button></li>
+            <li *ngIf="!authService.isLoggedIn">
+                <button mat-flat-button color="primary" (click)="navigate('login')">Login</button>
+            </li>
+            <li *ngIf="!authService.isLoggedIn">
+                <button mat-flat-button color="primary" (click)="navigate('register')">Register</button>
+            </li>
+            <li *ngIf="authService.isLoggedIn">
+                <button mat-flat-button color="primary" (click)="navigate('profile')">Profile</button>
+            </li>
+            <li *ngIf="authService.isLoggedIn">
+                <button mat-flat-button color="primary" (click)="navigate('library')">Library</button>
+            </li>
+            <li *ngIf="authService.isLoggedIn">
+                <button mat-flat-button color="primary" (click)="navigate('scan')">Scan</button>
+            </li>
+            <li *ngIf="authService.isLoggedIn">
+                <button mat-flat-button color="accent" (click)="openLogoutDialog()">
+                    <mat-icon>exit_to_app</mat-icon>Logout
+                </button>
+            </li>
         </ul>
     </mat-sidenav>
   
     <mat-sidenav-content>
         <button mat-button (click)="sidenav.toggle()">
-            <img src="assets/icons/hamburger-menu.svg" alt="Menu">
+            <mat-icon>menu</mat-icon>
         </button>
         <div class="container">
             <router-outlet></router-outlet>

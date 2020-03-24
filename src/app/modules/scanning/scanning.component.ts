@@ -64,11 +64,12 @@ export class ScanningComponent implements OnInit {
         }
     }
 
-    addBook(index: number, status: string): void {
+    addBook(index: number, locationStatus: string, progressStatus: string): void {
         const userBook = new UserBook();
         userBook.user_id = localStorage.getItem('user_id');
         userBook.book = this.foundBooks[index];
-        userBook.status = status;
+        userBook.location_status = locationStatus;
+        userBook.progress_status = progressStatus;
 
         this.userBookService.postUserBook(userBook)
             .subscribe(res => { console.log(res); },

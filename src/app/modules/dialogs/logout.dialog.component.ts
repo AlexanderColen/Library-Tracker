@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
-    selector: 'app-dialog',
-    templateUrl: 'dialog.html',
+    selector: 'app-logout-dialog',
+    templateUrl: 'logout.dialog.html',
 })
-export class DialogComponent {
-    constructor(public dialogRef: MatDialogRef<DialogComponent>) {}
+export class LogoutDialogComponent {
+    constructor(public dialogRef: MatDialogRef<LogoutDialogComponent>) {}
 
     onLogoutClick(): void {
         this.dialogRef.close('LOGOUT');

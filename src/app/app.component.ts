@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { Router } from '@angular/router';
-import { DialogComponent } from './modules/dialogs/dialog.component';
+import { LogoutDialogComponent } from './modules/dialogs/logout.dialog.component';
 import { AuthenticationService } from './services/authentication.service';
 
 @Component({
@@ -44,10 +44,11 @@ export class AppComponent {
         localStorage.removeItem('username');
         this.router.navigate(['login']);
         this.authService.logout();
+        this.sidenav.toggle();
     }
 
     openLogoutDialog(): void {
-        const dialogRef = this.dialog.open(DialogComponent, {
+        const dialogRef = this.dialog.open(LogoutDialogComponent, {
             width: '220px',
         });
 

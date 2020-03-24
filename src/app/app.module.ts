@@ -19,7 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { BookComponent } from './modules/book/book.component';
-import { DialogComponent } from './modules/dialogs/dialog.component';
+import { BookAdditionDialogComponent } from './modules/dialogs/book.addition.component';
+import { LogoutDialogComponent } from './modules/dialogs/logout.dialog.component';
 import { LibraryComponent } from './modules/library/library.component';
 import { LoginComponent } from './modules/login/login.component';
 import { ProfileComponent } from './modules/profile/profile.component';
@@ -34,7 +35,8 @@ import { UserBookService } from './services/userbook.service';
     declarations: [
         AppComponent,
         BookComponent,
-        DialogComponent,
+        BookAdditionDialogComponent,
+        LogoutDialogComponent,
         LibraryComponent,
         LoginComponent,
         ProfileComponent,
@@ -42,7 +44,8 @@ import { UserBookService } from './services/userbook.service';
         ScanningComponent,
     ],
     entryComponents: [
-        DialogComponent,
+        BookAdditionDialogComponent,
+        LogoutDialogComponent,
     ],
     imports: [
         AppRoutingModule,

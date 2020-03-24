@@ -6,7 +6,7 @@
         <p>{{ book.title }}</p>
         <p>{{ book.author }}</p>
         <p>{{ book.pages }}</p>
-        <img [src]="book.image ? book.image : ''" alt="Book Cover Image" />
+        <img [src]="book.image ? book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image" />
     </mat-card>
     <div *ngIf="!loading && !book">
         <p>No book found with this ID!</p>

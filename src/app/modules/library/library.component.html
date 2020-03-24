@@ -17,7 +17,7 @@
         </div>
         <div *ngFor="let ub of shownUserBooks; let i = index">
             <a [routerLink]="['/library', ub.book.id]">{{ ub.book.title }} - {{ ub.book.author }}</a>
-            <button (click)="deleteBook(i)">Delete</button>
+            <button mat-raised-button color="accent" (click)="deleteBook(i)"><mat-icon>delete_forever</mat-icon>Delete</button>>
         </div>
     </mat-card>
 </div>

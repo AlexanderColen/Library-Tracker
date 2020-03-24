@@ -4,7 +4,8 @@ export class UserBook {
     id: string;
     user_id: string;
     book: Book;
-    status: string;
+    location_status: string;
+    progress_status: string;
 
     public constructor() { }
 }
