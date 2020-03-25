@@ -8,7 +8,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-right: 25vw;
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    flex-flow: column wrap;
 }
 
 .container > * {
@@ -24,11 +24,25 @@ button {
     }
 }
 
+// Loading overlay that darkens the page and centers the spinner.
+.loading-shade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .6);
+}
+
 .elevated-container {
     position: relative;
     padding: 5px;
 }
 
+// Customized anchored links that don't turn purple.
 .anchored {
     color: blue;
     text-decoration: underline;
@@ -37,4 +51,27 @@ button {
 .anchored:hover {
     color: rgb(2, 2, 201);
     cursor: pointer;
+}
+
+// Allow and prevent clicks on elements, overwriting other behaviour.
+.prevent-click{
+    pointer-events: none;
+}
+
+.authorize-click{
+    pointer-events: auto;
+}
+
+// Custom accordion that is operated with buttons in the panel-header instead.
+.button-accordion {
+    .mat-expansion-panel-body {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 0;
+    }
+    
+    .mat-content {
+        padding-top: 1vh;
+        justify-content: center;
+    }
 }

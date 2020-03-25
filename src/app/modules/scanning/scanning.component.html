@@ -1,25 +1,25 @@
 <h1>Scan Barcode</h1>
 <div class="elevated-container mat-elevation-z8">
-    <div class="loading-shade" *ngIf="loading">
-        <mat-spinner *ngIf="loading"></mat-spinner>
-    </div>
-    <mat-card>
-        <input id="barcodeInput" type="file" (change)="decodeImage($event)" capture #barcodeInput/>
-        <div id="buttonMenu">
-            <button mat-raised-button color="primary" (click)="barcodeInput.click()"><mat-icon>camera_alt</mat-icon>Scan Barcode</button>
-            <button mat-raised-button color="primary"><mat-icon>search</mat-icon>Search</button>
-        </div>
-        <p>Or search below</p>
-        <form>
-            <mat-form-field class="example-full-width">
+    <input id="barcodeInput" type="file" (change)="decodeImage($event)" capture #barcodeInput/>
+    
+    <mat-accordion class='prevent-click button-accordion'>
+        <mat-expansion-panel #searchPanel hideToggle>
+            <mat-expansion-panel-header>
+                <div id="buttonMenu">
+                    <button mat-raised-button class="authorize-click" color="primary" (click)="barcodeInput.click(); searchPanel.toggle()"><mat-icon>camera_alt</mat-icon>Scan Barcode</button>
+                    <button mat-raised-button class="authorize-click" color="primary"><mat-icon>search</mat-icon>Search</button>
+                </div>
+            </mat-expansion-panel-header>
+            <mat-form-field class="authorize-click">
                 <mat-label>Enter Search Criteria</mat-label>
                 <span matPrefix>
                     <mat-icon>search</mat-icon>
                 </span>
                 <input matInput type="text" name="search" [(ngModel)]="searchCriteria" (keyup)="onSearchKeyUp()" (keydown.enter)="onSearchKeyUp()">
             </mat-form-field>
-        </form>
-    </mat-card>
+        </mat-expansion-panel>
+    </mat-accordion>
+
     <div *ngIf="foundBooks">
         <mat-card class="card-book" (click)="addBook(i, 'OWNED', 'PLAN_TO_READ')" *ngFor="let b of foundBooks; let i = index">
             <p><b>ISBN:</b> {{ b.isbn }}</p>
@@ -30,4 +30,7 @@
             <button mat-raised-button color="accent"><mat-icon>add_circle</mat-icon>Add Book</button>
         </mat-card>
     </div>
+</div>
+<div class="loading-shade" *ngIf="loading">
+    <mat-spinner *ngIf="loading"></mat-spinner>
 </div>
