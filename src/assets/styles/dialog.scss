@@ -2,6 +2,35 @@
 * Dialog styling.
 */
 
+.mat-dialog-title {
+    margin-bottom: 0 !important;
+}
+
+.mat-dialog-content {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+        max-height: 25%;
+        max-width: 25%;
+    }
+
+    .dialog-selects {
+        display: flex;
+        flex-direction: column;
+    
+        mat-form-field {
+            min-width: 220px;
+        }
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+
 .mat-dialog-actions {
     display: flex;
     justify-content: center;

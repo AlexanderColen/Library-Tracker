@@ -13,6 +13,6 @@ export class LogoutDialogComponent {
     }
 
     onCancelClick(): void {
-      this.dialogRef.close();
+      this.dialogRef.close('CANCEL');
     }
 }

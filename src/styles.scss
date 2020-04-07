@@ -2,7 +2,8 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 // Import all the custom stylesheets.
-@import './assets/styles/general.scss';
 @import './assets/styles/accordion.scss';
-@import './assets/styles/loader.scss';
 @import './assets/styles/book-collection.scss';
+@import './assets/styles/dialog.scss';
+@import './assets/styles/general.scss';
+@import './assets/styles/loader.scss';

@@ -17,11 +17,13 @@ export class LibraryComponent implements OnInit {
     username: string;
     userBookCollection: UserBook[];
     loading = false;
-    shownUserBooks: Book[];
+    shownUserBooks: UserBook[];
     menuOptions: MenuOption[] = [
-        { value: 'all', viewValue: 'All' },
-        { value: 'owned', viewValue: 'Owned' },
-        { value: 'wanted', viewValue: 'Wishlist' }
+        { value: 'ALL', viewValue: 'All' },
+        { value: 'OWNED', viewValue: 'Owned' },
+        { value: 'LOANED', viewValue: 'Loaned Out' },
+        { value: 'BORROWED', viewValue: 'Borrowed' },
+        { value: 'WISHED', viewValue: 'Wishlist' },
     ];
 
     constructor(private userBookService: UserBookService,
@@ -45,8 +47,16 @@ export class LibraryComponent implements OnInit {
     }
 
     displayBooks(event: any): void {
-        // this.shownUserBooks = [];
-        console.log('Operation Not Yet Implemented.');
+        this.shownUserBooks = [];
+        if (event.value === 'ALL') {
+            this.shownUserBooks = this.userBookCollection;
+        } else {
+            this.userBookCollection.forEach(book => {
+                if (book.location_status === event.value) {
+                    this.shownUserBooks.push(book);
+                }
+            });
+        }
     }
 
     deleteBook(index: number): void {

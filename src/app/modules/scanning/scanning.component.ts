@@ -80,14 +80,14 @@ export class ScanningComponent implements OnInit {
                     );
     }
 
-    openAddBookDialog(index: number): void {
+    openAddBookDialog(index: number, book: Book): void {
         const dialogRef = this.dialog.open(BookAdditionDialogComponent, {
-            
+            data: book,
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (result === 'LOGOUT') {
-                console.log(result);
+            if (result[0] === 'ADD') {
+                this.addBook(index, result[1], result[2]);
             }
         });
     }

@@ -48,9 +48,7 @@ export class AppComponent {
     }
 
     openLogoutDialog(): void {
-        const dialogRef = this.dialog.open(LogoutDialogComponent, {
-            
-        });
+        const dialogRef = this.dialog.open(LogoutDialogComponent, { });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result === 'LOGOUT') {

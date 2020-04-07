@@ -1,6 +1,23 @@
-<h1 mat-dialog-title>Add Book</h1>
+<h1 mat-dialog-title>Add <i>{{ book.title }}</i> ?</h1>
 <div mat-dialog-content>
-    <p>Are you sure?</p>
+    <img class='book-cover' [src]="book.image ? book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
+    <p>Are you sure you want to add this book?</p>
+    <div class='dialog-selects'>
+        <mat-form-field>
+            <mat-select [(ngModel)]="selectedLocation" [value]="locationStatuses[0]" placeholder="Set current location status.">
+                <mat-option *ngFor="let status of locationStatuses" [value]="status">
+                {{ status }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select [(ngModel)]="selectedProgress" [value]="progressStatuses[0]" placeholder="Set current progress status.">
+                <mat-option *ngFor="let status of progressStatuses" [value]="status">
+                {{ status }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 </div>
 <div mat-dialog-actions>
     <button mat-flat-button color="accent" (click)="onAdditionClick()">Add Book</button>
