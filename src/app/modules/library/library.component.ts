@@ -57,9 +57,9 @@ export class LibraryComponent implements OnInit {
                         err => { console.log(err); });
     }
 
-    openDeletionDialog(index: number): void {
+    openDeletionDialog(index: number, book: Book): void {
         const dialogRef = this.dialog.open(DeletionDialogComponent, {
-            
+            data: book,
         });
 
         dialogRef.afterClosed().subscribe(result => {

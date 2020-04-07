@@ -1,0 +1,16 @@
+/* 
+* Custom accordion that is operated with buttons in the panel-header instead.
+*/
+
+.button-accordion {
+    .mat-expansion-panel-body {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 0;
+    }
+    
+    .mat-content {
+        padding-top: 1vh;
+        justify-content: center;
+    }
+}

@@ -20,7 +20,7 @@
             <button class='book-button book-left-button' mat-raised-button color="primary" [routerLink]="['/library', ub.book.id]">
                 <mat-icon>info</mat-icon>Show Info
             </button>
-            <button class='book-button book-right-button' mat-raised-button color="accent" (click)="openDeletionDialog(i)">
+            <button class='book-button book-right-button' mat-raised-button color="accent" (click)="openDeletionDialog(i, ub.book)">
                 <mat-icon>delete_forever</mat-icon>Delete
             </button>
         </mat-card>

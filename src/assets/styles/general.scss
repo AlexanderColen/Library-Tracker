@@ -1,0 +1,53 @@
+/*
+* General styling that is used in (almost) every page.
+*/
+
+.container {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    display: flex;
+    justify-content: center;
+    flex-flow: column wrap;
+}
+
+.container > * {
+    width: 100%;
+}
+
+button {
+    height: 40px;
+    text-transform: uppercase;
+
+    mat-icon {
+        margin-right: 4px;
+    }
+}
+
+h1 {
+    text-align: center;
+}
+
+.elevated-container {
+    position: relative;
+    padding: 5px;
+}
+
+// Customized anchored links that don't turn purple.
+.anchored {
+    color: blue;
+    text-decoration: underline;
+}
+
+.anchored:hover {
+    color: rgb(2, 2, 201);
+    cursor: pointer;
+}
+
+// Allow and prevent clicks on elements, overwriting other behaviour.
+.prevent-click{
+    pointer-events: none;
+}
+
+.authorize-click{
+    pointer-events: auto;
+}
