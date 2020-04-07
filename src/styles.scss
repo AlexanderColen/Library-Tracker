@@ -1,11 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .container {
-    margin-left: 25vw;
-    margin-right: 25vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
     display: flex;
     justify-content: center;
     flex-flow: column wrap;
@@ -22,6 +20,10 @@ button {
     mat-icon {
         margin-right: 4px;
     }
+}
+
+h1 {
+    text-align: center;
 }
 
 // Loading overlay that darkens the page and centers the spinner.
@@ -73,5 +75,61 @@ button {
     .mat-content {
         padding-top: 1vh;
         justify-content: center;
+    }
+}
+
+// Custom card for displaying books.
+.books-collection {
+    margin-top: 10px;
+    display: flex;
+    flex-flow: row wrap;
+
+    .card-book {
+        width: 22.5vw;
+        margin-left: 2vw;
+        margin-bottom: 2.5vh;
+        display: grid !important;
+        grid-template-columns: 40% 60%;
+        grid-template-rows: repeat(3, 25%) 10% 1fr;
+    
+        .book-info {
+            grid-column: 2;
+            margin: 0;
+            overflow-y: auto;
+        }
+    
+        .book-cover {
+            grid-column: 1;
+            grid-row-start: 1;
+            grid-row-end: -2;
+            height: 90%;
+            width: 90%;
+            justify-self: left;
+            align-self: center;
+        }
+
+        .book-button {
+            grid-row: 6;
+            align-self: center;
+        }
+    
+        .book-full-button {
+            grid-column-start: 1;
+            grid-column-end: -1;
+        }
+    
+        .book-left-button {
+            grid-column: 1;
+        }
+    
+        .book-right-button {
+            grid-column: 2;
+            width: 90%;
+            justify-self: right;
+        }
+    }
+    
+    .card-book:nth-child(3n + 1) {
+        margin-left: 0;
     }
 }

@@ -17,7 +17,7 @@ export class AppComponent {
 
     constructor(private router: Router,
                 private authService: AuthenticationService,
-                public dialog: MatDialog) { }
+                private dialog: MatDialog) { }
 
     navigate(destination: string): void {
         if (destination === 'login') {
@@ -49,7 +49,7 @@ export class AppComponent {
 
     openLogoutDialog(): void {
         const dialogRef = this.dialog.open(LogoutDialogComponent, {
-            width: '220px',
+            
         });
 
         dialogRef.afterClosed().subscribe(result => {

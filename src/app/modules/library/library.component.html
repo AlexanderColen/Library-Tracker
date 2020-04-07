@@ -10,14 +10,19 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-card *ngIf="shownUserBooks">
-        <div *ngIf="shownUserBooks.length === 0">
-            <p *ngIf="shownUserBooks.length === 0">No books found in your library!</p>
-            <p class='anchored' [routerLink]="['/scan']">How about adding a new book?</p>
-        </div>
-        <div *ngFor="let ub of shownUserBooks; let i = index">
-            <a [routerLink]="['/library', ub.book.id]">{{ ub.book.title }} - {{ ub.book.author }}</a>
-            <button mat-raised-button color="accent" (click)="deleteBook(i)"><mat-icon>delete_forever</mat-icon>Delete</button>>
-        </div>
-    </mat-card>
+    <div class='books-collection' *ngIf="shownUserBooks">
+        <mat-card class="card-book" *ngFor="let ub of shownUserBooks; let i = index">
+            <p class='book-info book-isbn'><b>ISBN:</b> {{ ub.book.isbn ? ub.book.isbn : '?' }}</p>
+            <p class='book-info book-title'><b>Title:</b> {{ ub.book.title ? ub.book.title : '?' }}</p>
+            <p class='book-info book-author'><b>Author:</b> {{ ub.book.author ? ub.book.author : '?' }}</p>
+            <p class='book-info book-pages'><b>Status:</b> {{ ub.location_status }}</p>
+            <img class='book-cover' [src]="ub.book.image ? ub.book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
+            <button class='book-button book-left-button' mat-raised-button color="primary" [routerLink]="['/library', ub.book.id]">
+                <mat-icon>info</mat-icon>Show Info
+            </button>
+            <button class='book-button book-right-button' mat-raised-button color="accent" (click)="openDeletionDialog(i)">
+                <mat-icon>delete_forever</mat-icon>Delete
+            </button>
+        </mat-card>
+    </div>
 </div>

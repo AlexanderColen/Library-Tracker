@@ -2,9 +2,11 @@
     display: none;
 }
 
-#buttonMenu {
-    button {
-        margin-bottom: 1vh;
-        margin-right: 1vw;
+.button-accordion {
+    #buttonMenu {
+        button {
+            margin-bottom: 1vh;
+            margin-right: 1vw;
+        }
     }
 }

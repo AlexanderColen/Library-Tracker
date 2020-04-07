@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Book } from 'src/app/models/Book';
 import { MenuOption } from 'src/app/models/MenuOption';
-import { UserBookService } from 'src/app/services/userbook.service';
 import { UserBook } from 'src/app/models/UserBook';
+import { UserBookService } from 'src/app/services/userbook.service';
+import { DeletionDialogComponent } from '../dialogs/deletion.dialog.component';
 
 @Component({
     selector: 'app-library',
@@ -17,14 +19,15 @@ export class LibraryComponent implements OnInit {
     loading = false;
     shownUserBooks: Book[];
     menuOptions: MenuOption[] = [
-        {value: 'all', viewValue: 'All'},
-        {value: 'owned', viewValue: 'Owned'},
-        {value: 'wanted', viewValue: 'Wishlist'}
+        { value: 'all', viewValue: 'All' },
+        { value: 'owned', viewValue: 'Owned' },
+        { value: 'wanted', viewValue: 'Wishlist' }
     ];
 
     constructor(private userBookService: UserBookService,
                 private router: Router,
-                private titleService: Title) {
+                private titleService: Title,
+                private dialog: MatDialog) {
         this.titleService.setTitle('Book Collection - Library Tracker');
     }
 
@@ -52,5 +55,17 @@ export class LibraryComponent implements OnInit {
                             this.userBookCollection.splice(index, 1);
                         },
                         err => { console.log(err); });
+    }
+
+    openDeletionDialog(index: number): void {
+        const dialogRef = this.dialog.open(DeletionDialogComponent, {
+            
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === 'DELETE') {
+                this.deleteBook(index);
+            }
+        });
     }
 }

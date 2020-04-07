@@ -8,6 +8,10 @@ import { MatDialogRef } from '@angular/material';
 export class BookAdditionDialogComponent {
     constructor(public dialogRef: MatDialogRef<BookAdditionDialogComponent>) {}
 
+    onAdditionClick(): void {
+        this.dialogRef.close('ADD');
+    }
+
     onCancelClick(): void {
       this.dialogRef.close();
     }

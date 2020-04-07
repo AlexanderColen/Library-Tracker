@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { BookComponent } from './modules/book/book.component';
 import { BookAdditionDialogComponent } from './modules/dialogs/book.addition.component';
+import { DeletionDialogComponent } from './modules/dialogs/deletion.dialog.component';
 import { LogoutDialogComponent } from './modules/dialogs/logout.dialog.component';
 import { LibraryComponent } from './modules/library/library.component';
 import { LoginComponent } from './modules/login/login.component';
@@ -37,6 +38,7 @@ import { UserBookService } from './services/userbook.service';
         AppComponent,
         BookComponent,
         BookAdditionDialogComponent,
+        DeletionDialogComponent,
         LogoutDialogComponent,
         LibraryComponent,
         LoginComponent,
@@ -46,6 +48,7 @@ import { UserBookService } from './services/userbook.service';
     ],
     entryComponents: [
         BookAdditionDialogComponent,
+        DeletionDialogComponent,
         LogoutDialogComponent,
     ],
     imports: [

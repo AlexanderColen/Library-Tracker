@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -6,6 +7,7 @@ import { Book } from 'src/app/models/Book';
 import { UserBook } from 'src/app/models/UserBook';
 import { SearchService } from 'src/app/services/search.service';
 import { UserBookService } from 'src/app/services/userbook.service';
+import { BookAdditionDialogComponent } from '../dialogs/book.addition.component';
 
 @Component({
   selector: 'app-scanning',
@@ -20,7 +22,8 @@ export class ScanningComponent implements OnInit {
 
     constructor(private titleService: Title,
                 private searchService: SearchService,
-                private userBookService: UserBookService) {
+                private userBookService: UserBookService,
+                private dialog: MatDialog) {
         this.titleService.setTitle('Book Finder - Library Tracker');
     }
 
@@ -75,5 +78,17 @@ export class ScanningComponent implements OnInit {
             .subscribe(res => { console.log(res); },
                        err => { console.log(err); }
                     );
+    }
+
+    openAddBookDialog(index: number): void {
+        const dialogRef = this.dialog.open(BookAdditionDialogComponent, {
+            
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === 'LOGOUT') {
+                console.log(result);
+            }
+        });
     }
 }

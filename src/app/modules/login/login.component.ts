@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
                 private authService: AuthenticationService,
                 private snackBar: MatSnackBar,
                 private titleService: Title) {
-                    titleService.setTitle('Login - Library Tracker');
+                    this.titleService.setTitle('Login - Library Tracker');
                 }
 
     ngOnInit() {
