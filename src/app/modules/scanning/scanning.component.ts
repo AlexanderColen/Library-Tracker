@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Title } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Book } from 'src/app/models/Book';
 import { UserBook } from 'src/app/models/UserBook';
@@ -64,6 +64,8 @@ export class ScanningComponent implements OnInit {
                            err => { console.log(err);
                                     this.loading = false; },
                         );
+        } else {
+            this.foundBooks = null;
         }
     }
 

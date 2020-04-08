@@ -8,12 +8,11 @@
     flex-flow: row wrap;
 
     .card-book {
-        width: 22.5vw;
         margin-left: 2vw;
         margin-bottom: 2.5vh;
         display: grid !important;
         grid-template-columns: 40% 60%;
-        grid-template-rows: repeat(3, 25%) 10% 1fr;
+        grid-template-rows: 10% repeat(2, 30%) 10% 1fr;
     
         .book-info {
             grid-column: 2;
@@ -40,6 +39,19 @@
             grid-column-start: 1;
             grid-column-end: -1;
         }
+    }
+    
+    .card-book:nth-child(3n + 1) {
+        margin-left: 0;
+    }
+}
+
+// Desktop specific
+@media only screen and (min-width: 768px) {
+    .books-collection {
+        .card-book {
+            width: 22.5vw;
+        }
     
         .book-left-button {
             grid-column: 1;
@@ -51,8 +63,31 @@
             justify-self: right;
         }
     }
-    
-    .card-book:nth-child(3n + 1) {
-        margin-left: 0;
+}
+
+// Mobile specific
+@media only screen and (max-width: 768px) {
+    .books-collection {
+        flex-direction: column;
+
+        .card-book {
+            margin-left: 0;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+
+            .book-cover {
+                height: 10em;
+                width: auto;
+            }
+
+            .book-button {
+                margin-top: 10px;
+            }
+        }
+
+        .card-book > * {
+            width: 100%;
+        }
     }
 }

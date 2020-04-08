@@ -19,3 +19,13 @@
         }
     }
 }
+
+// Mobile specific
+@media only screen and (max-width: 768px) {
+    .menu-button {
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 25vw;
+    }
+}
