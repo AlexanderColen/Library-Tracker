@@ -1,12 +1,14 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(private router: Router) { }
+    constructor(private router: Router,
+                private snackBar: MatSnackBar) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = localStorage.getItem('token');
@@ -42,6 +44,9 @@ export class TokenInterceptor implements HttpInterceptor {
                 console.log(error);
                 if (error.status === 401) {
                     this.router.navigate(['login']);
+                    this.snackBar.open('Session timed out.', 'Dismiss', {
+                        duration: 2000,
+                    });
                 }
                 return throwError(error);
             })

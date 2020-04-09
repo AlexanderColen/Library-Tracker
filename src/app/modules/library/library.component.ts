@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Book } from 'src/app/models/Book';
@@ -29,7 +29,8 @@ export class LibraryComponent implements OnInit {
     constructor(private userBookService: UserBookService,
                 private router: Router,
                 private titleService: Title,
-                private dialog: MatDialog) {
+                private dialog: MatDialog,
+                private snackBar: MatSnackBar) {
         this.titleService.setTitle('Book Collection - Library Tracker');
     }
 
@@ -41,7 +42,10 @@ export class LibraryComponent implements OnInit {
                                 this.shownUserBooks = res;
                                 this.loading = false;
                         },
-                        err => { console.log(err);
+                        err => { this.snackBar.open('Something went wrong while fetching the books.', 'Dismiss', {
+                                    duration: 2000,
+                                 });
+                                 console.log(err);
                                  this.loading = false;
                         });
     }
@@ -63,8 +67,16 @@ export class LibraryComponent implements OnInit {
         this.userBookService.deleteUserBook(this.userBookCollection[index].id)
             .subscribe(res => {
                             this.userBookCollection.splice(index, 1);
+                            this.snackBar.open('Book successfully deleted.', 'Dismiss', {
+                                duration: 2000,
+                             });
                         },
-                        err => { console.log(err); });
+                        err => {
+                            this.snackBar.open('Something went wrong while deleting book.', 'Dismiss', {
+                                duration: 2000,
+                            });
+                            console.log(err);
+                            });
     }
 
     openDeletionDialog(index: number, book: Book): void {

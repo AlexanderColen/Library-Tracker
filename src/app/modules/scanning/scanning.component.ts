@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { Subject, throwError } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -23,7 +23,8 @@ export class ScanningComponent implements OnInit {
     constructor(private titleService: Title,
                 private searchService: SearchService,
                 private userBookService: UserBookService,
-                private dialog: MatDialog) {
+                private dialog: MatDialog,
+                private snackBar: MatSnackBar) {
         this.titleService.setTitle('Book Finder - Library Tracker');
     }
 
@@ -45,7 +46,10 @@ export class ScanningComponent implements OnInit {
                 .subscribe(res => { this.searchCriteria = res;
                                     this.findBook();
                                     this.loading = false; },
-                           err => { console.log(err);
+                           err => { this.snackBar.open('Something went wrong while decoding the barcode.', 'Dismiss', {
+                                        duration: 2000,
+                                    });
+                                    console.log(err);
                                     this.loading = false; },
                         );
         };
@@ -61,7 +65,10 @@ export class ScanningComponent implements OnInit {
             this.searchService.searchGoogleBooks(this.searchCriteria)
                 .subscribe(res => { this.foundBooks = res;
                                     this.loading = false; },
-                           err => { console.log(err);
+                           err => { this.snackBar.open('Something went wrong while looking for books.', 'Dismiss', {
+                                        duration: 2000,
+                                    });
+                                    console.log(err);
                                     this.loading = false; },
                         );
         } else {
@@ -77,8 +84,14 @@ export class ScanningComponent implements OnInit {
         userBook.progress_status = progressStatus;
 
         this.userBookService.postUserBook(userBook)
-            .subscribe(res => { console.log(res); },
-                       err => { console.log(err); }
+            .subscribe(res => { this.snackBar.open('Book added to personal library.', 'Dismiss', {
+                                    duration: 2000,
+                                }); },
+                       err => { console.log(err);
+                                this.snackBar.open('Something went wrong while adding the book.', 'Dismiss', {
+                                    duration: 2000,
+                                });
+                            }
                     );
     }
 

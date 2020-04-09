@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective, NgForm, FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher } from '@angular/material';
 import { Book } from 'src/app/models/Book';
 
 @Component({
@@ -21,16 +22,20 @@ export class BookAdditionDialogComponent {
         'PLAN_TO_READ',
         'ABANDONED',
     ];
-    selectedLocation: string;
-    selectedProgress: string;
+    selectForm: FormGroup;
 
     constructor(public dialogRef: MatDialogRef<BookAdditionDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) data: Book) {
+                @Inject(MAT_DIALOG_DATA) data: Book,
+                private formBuilder: FormBuilder) {
         this.book = data;
+        this.selectForm = this.formBuilder.group({
+            selectedLocation : [null, Validators.required],
+            selectedProgress : [null, Validators.required]
+        });
     }
 
-    onAdditionClick(): void {
-        this.dialogRef.close(['ADD', this.selectedLocation, this.selectedProgress]);
+    onAdditionClick(form: NgForm): void {
+        this.dialogRef.close(['ADD', form['selectedLocation'], form['selectedProgress']]);
     }
 
     onCancelClick(): void {
