@@ -22,9 +22,9 @@
 
     <div class='books-collection' *ngIf="foundBooks">
         <mat-card class="card-book" *ngFor="let b of foundBooks; let i = index" (click)="openAddBookDialog(i, b)">
-            <p class='book-info book-isbn'><b>ISBN:</b> {{ b.isbn ? b.isbn : '?' }}</p>
-            <p class='book-info book-title'><b>Title:</b> {{ b.title ? b.title : '?' }}</p>
-            <p class='book-info book-author'><b>Author:</b> {{ b.author ? b.author : '?' }}</p>
+            <p class='book-info book-isbn'><strong>ISBN:</strong> {{ b.isbn ? b.isbn : '?' }}</p>
+            <p class='book-info book-title'><strong>Title:</strong> {{ b.title ? b.title : '?' }}</p>
+            <p class='book-info book-author'><strong>Author:</strong> {{ b.author ? b.author : '?' }}</p>
             <p class='book-info book-pages'>{{ b.pages ? b.pages : '?' }} Pages</p>
             <img class='book-cover' [src]="b.image ? b.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
             <button class='book-button book-full-button' mat-raised-button color="accent">

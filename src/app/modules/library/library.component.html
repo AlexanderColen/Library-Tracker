@@ -12,11 +12,11 @@
     </mat-form-field>
     <div class='books-collection' *ngIf="shownUserBooks">
         <mat-card class="card-book" *ngFor="let ub of shownUserBooks; let i = index">
-            <p class='book-info book-isbn'><b>ISBN:</b> {{ ub.book.isbn ? ub.book.isbn : '?' }}</p>
-            <p class='book-info book-title'><b>Title:</b> {{ ub.book.title ? ub.book.title : '?' }}</p>
-            <p class='book-info book-author'><b>Author:</b> {{ ub.book.author ? ub.book.author : '?' }}</p>
-            <p class='book-info book-status'><b>Status:</b> {{ ub.location_status }}</p>
-            <p class='book-info book-progress'><b>Progress:</b> {{ ub.progress_status }}</p>
+            <p class='book-info book-isbn'><strong>ISBN:</strong> {{ ub.book.isbn ? ub.book.isbn : '?' }}</p>
+            <p class='book-info book-title'><strong>Title:</strong> {{ ub.book.title ? ub.book.title : '?' }}</p>
+            <p class='book-info book-author'><strong>Author:</strong> {{ ub.book.author ? ub.book.author : '?' }}</p>
+            <p class='book-info book-status'><strong>Status:</strong> {{ ub.location_status }}</p>
+            <p class='book-info book-progress'><strong>Progress:</strong> {{ ub.progress_status }}</p>
             <img class='book-cover' [src]="ub.book.image ? ub.book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
             <button class='book-button book-left-button' mat-raised-button color="primary" [routerLink]="['/library', ub.book.id]">
                 <mat-icon>info</mat-icon>Show Info
