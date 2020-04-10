@@ -22,20 +22,20 @@ export class BookEditDialogComponent {
         'PLAN_TO_READ',
         'ABANDONED',
     ];
-    selectForm: FormGroup;
+    editForm: FormGroup;
 
     constructor(public dialogRef: MatDialogRef<BookEditDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) data: UserBook,
                 private formBuilder: FormBuilder) {
         this.userBook = data;
-        this.selectForm = this.formBuilder.group({
+        this.editForm = this.formBuilder.group({
             location : [null, Validators.required],
             progress : [null, Validators.required],
             comment : [null, null]
         });
-        this.selectForm.value.location = this.userBook.locationStatus;
-        this.selectForm.value.progress = this.userBook.progressStatus;
-        this.selectForm.value.comment = this.userBook.comment;
+        this.editForm.value.location = this.userBook.locationStatus;
+        this.editForm.value.progress = this.userBook.progressStatus;
+        this.editForm.value.comment = this.userBook.comment;
     }
 
     onEditClick(form: NgForm): void {

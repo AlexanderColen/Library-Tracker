@@ -2,7 +2,7 @@
 <div mat-dialog-content>
     <img class='book-cover' [src]="userBook.book.image ? userBook.book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
     <div>
-        <form [formGroup]="selectForm">
+        <form [formGroup]="editForm">
             <div class='dialog-selects'>
                 <mat-form-field>
                     <mat-select [value]="locationStatuses[0]" formControlName="location" placeholder="Set current location status.">
@@ -26,6 +26,6 @@
     </div>
 </div>
 <div mat-dialog-actions>
-    <button mat-flat-button color="accent" [disabled]="!selectForm.valid" (click)="onEditClick(selectForm)">Save Changes</button>
+    <button mat-flat-button color="accent" [disabled]="!selectForm.valid" (click)="onEditClick(editForm)">Save Changes</button>
     <button mat-flat-button (click)="onCancelClick()">Cancel</button>
 </div>

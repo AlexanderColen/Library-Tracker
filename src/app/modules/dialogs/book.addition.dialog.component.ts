@@ -22,13 +22,13 @@ export class BookAdditionDialogComponent {
         'PLAN_TO_READ',
         'ABANDONED',
     ];
-    selectForm: FormGroup;
+    addForm: FormGroup;
 
     constructor(public dialogRef: MatDialogRef<BookAdditionDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) data: Book,
                 private formBuilder: FormBuilder) {
         this.book = data;
-        this.selectForm = this.formBuilder.group({
+        this.addForm = this.formBuilder.group({
             location : [null, Validators.required],
             progress : [null, Validators.required],
             comment : [null, null]
