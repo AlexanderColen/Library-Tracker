@@ -1,15 +1,8 @@
-/* Structure */  
-.example-form {
-    min-width: 150px;
-    max-width: 500px;
+.full-width {
     width: 100%;
 }
   
-.example-full-width {
-    width: 100%;
-}
-  
-.example-full-width:nth-last-child(1) {
+.full-width:nth-last-child(1) {
     margin-bottom: 10px;
 }
   

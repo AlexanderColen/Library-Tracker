@@ -11,14 +11,25 @@ export class BookService {
 
     constructor(private httpClient: HttpClient) { }
 
+    /**
+     * Fetch all the Books.
+     */
     getBooks(): Observable<any> {
         return this.httpClient.get(this.booksApi);
     }
 
+    /**
+     * Fetch a specific Book.
+     * @param id The ID of the Book.
+     */
     getSpecificBook(id: string): Observable<any> {
         return this.httpClient.get(this.booksApi + id);
     }
 
+    /**
+     * Delete an existing Book.
+     * @param id The ID of the Book.
+     */
     deleteBook(id: string): Observable<any> {
         return this.httpClient.delete(this.booksApi + id);
     }

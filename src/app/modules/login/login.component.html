@@ -5,13 +5,13 @@
     <mat-card>
         <h1>Login</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
                 <input matInput type="username" placeholder="Username" formControlName="username" [errorStateMatcher]="matcher">
                 <mat-error>
                     <span *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched">Please enter your username</span>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
                 <input matInput type="password" placeholder="Password" formControlName="password" [errorStateMatcher]="matcher">
                 <mat-error>
                     <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Please enter your password</span>

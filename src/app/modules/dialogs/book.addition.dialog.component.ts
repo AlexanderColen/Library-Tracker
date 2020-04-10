@@ -29,13 +29,14 @@ export class BookAdditionDialogComponent {
                 private formBuilder: FormBuilder) {
         this.book = data;
         this.selectForm = this.formBuilder.group({
-            selectedLocation : [null, Validators.required],
-            selectedProgress : [null, Validators.required]
+            location : [null, Validators.required],
+            progress : [null, Validators.required],
+            comment : [null, null]
         });
     }
 
     onAdditionClick(form: NgForm): void {
-        this.dialogRef.close(['ADD', form['selectedLocation'], form['selectedProgress']]);
+        this.dialogRef.close(['ADD', form.value.location, form.value.progress, form.value.comment]);
     }
 
     onCancelClick(): void {

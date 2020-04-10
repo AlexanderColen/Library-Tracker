@@ -42,6 +42,7 @@ export class AppComponent {
     logout(): void {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        localStorage.removeItem('userId');
         this.router.navigate(['login']);
         this.authService.logout();
         this.sidenav.toggle();

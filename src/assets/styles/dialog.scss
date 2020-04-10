@@ -19,10 +19,10 @@
     .dialog-selects {
         display: flex;
         flex-direction: column;
+    }
     
-        mat-form-field {
-            min-width: 220px;
-        }
+    mat-form-field {
+        min-width: 220px;
     }
 
     p {

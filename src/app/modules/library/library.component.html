@@ -15,13 +15,13 @@
             <p class='book-info book-isbn'><strong>ISBN:</strong> {{ ub.book.isbn ? ub.book.isbn : '?' }}</p>
             <p class='book-info book-title'><strong>Title:</strong> {{ ub.book.title ? ub.book.title : '?' }}</p>
             <p class='book-info book-author'><strong>Author:</strong> {{ ub.book.author ? ub.book.author : '?' }}</p>
-            <p class='book-info book-status'><strong>Status:</strong> {{ ub.location_status }}</p>
-            <p class='book-info book-progress'><strong>Progress:</strong> {{ ub.progress_status }}</p>
+            <p class='book-info book-status'><strong>Status:</strong> {{ ub.locationStatus }}</p>
+            <p class='book-info book-progress'><strong>Progress:</strong> {{ ub.progressStatus }}</p>
             <img class='book-cover' [src]="ub.book.image ? ub.book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
-            <button class='book-button book-left-button' mat-raised-button color="primary" [routerLink]="['/library', ub.book.id]">
-                <mat-icon>info</mat-icon>Show Info
+            <button class='book-button book-left-button' mat-raised-button color="primary" (click)="openEditDialog(i, ub)">
+                <mat-icon>info</mat-icon>Edit Book
             </button>
-            <button class='book-button book-right-button' mat-raised-button color="accent" (click)="openDeletionDialog(i, ub.book)">
+            <button class='book-button book-right-button' mat-raised-button color="accent" (click)="openDeletionDialog(i, ub)">
                 <mat-icon>delete_forever</mat-icon>Delete
             </button>
         </mat-card>

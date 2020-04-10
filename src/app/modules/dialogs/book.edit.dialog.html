@@ -1,7 +1,6 @@
-<h1 mat-dialog-title>Add <em>{{ book.title }}</em> ?</h1>
+<h1 mat-dialog-title>Edit <em>{{ userBook.book.title }}</em> ?</h1>
 <div mat-dialog-content>
-    <img class='book-cover' [src]="book.image ? book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
-    <p>Are you sure you want to add this book?</p>
+    <img class='book-cover' [src]="userBook.book.image ? userBook.book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
     <div>
         <form [formGroup]="selectForm">
             <div class='dialog-selects'>
@@ -27,6 +26,6 @@
     </div>
 </div>
 <div mat-dialog-actions>
-    <button mat-flat-button color="accent" [disabled]="!selectForm.valid" (click)="onAdditionClick(selectForm)">Add Book</button>
+    <button mat-flat-button color="accent" [disabled]="!selectForm.valid" (click)="onEditClick(selectForm)">Save Changes</button>
     <button mat-flat-button (click)="onCancelClick()">Cancel</button>
 </div>

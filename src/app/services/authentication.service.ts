@@ -18,6 +18,10 @@ export class AuthenticationService {
         }
     }
 
+    /**
+     * Login to the application.
+     * @param data The authentication data.
+     */
     login(data: any): Observable<any> {
         return this.http.post<any>(this.authApi + 'login', data)
             .pipe(
@@ -25,29 +29,18 @@ export class AuthenticationService {
             );
     }
 
+    /**
+     * Logout the currently logged in User.
+     */
     logout() {
         this.isLoggedIn = false;
-        // return this.http.get<any>(this.authApi + 'signout')
-        //     .pipe(
-        //         tap(_ => this.isLoggedIn = false),
-        //         catchError(this.handleError('logout', []))
-        //     );
     }
 
+    /**
+     * Register a new User.
+     * @param data The authentication data.
+     */
     register(data: any): Observable<any> {
         return this.http.post<any>(this.authApi + 'register', data);
-    }
-
-    private handleError<T>(operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-            console.error(error);
-            this.log(`${operation} failed: ${error.message}`);
-
-            return of(result as T);
-        };
-    }
-
-    private log(message: string) {
-        console.log(message);
     }
 }
