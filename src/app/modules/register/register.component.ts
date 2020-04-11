@@ -36,6 +36,9 @@ export class RegisterComponent implements OnInit {
     onFormSubmit(form: NgForm): void {
         this.authService.register(form)
             .subscribe(res => {
+                this.snackBar.open('Your account has been successfully created.', 'Dismiss', {
+                    duration: 2000,
+                });
                 this.router.navigate(['login']);
             }, (err) => {
                 console.log(err);
