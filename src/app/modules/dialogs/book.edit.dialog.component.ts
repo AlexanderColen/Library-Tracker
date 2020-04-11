@@ -28,14 +28,18 @@ export class BookEditDialogComponent {
                 @Inject(MAT_DIALOG_DATA) data: UserBook,
                 private formBuilder: FormBuilder) {
         this.userBook = data;
+        // Set form validators.
         this.editForm = this.formBuilder.group({
             location : [null, Validators.required],
             progress : [null, Validators.required],
             comment : [null, null]
         });
-        this.editForm.value.location = this.userBook.locationStatus;
-        this.editForm.value.progress = this.userBook.progressStatus;
-        this.editForm.value.comment = this.userBook.comment;
+        // Set form values.
+        this.editForm.patchValue({
+            location: this.userBook.locationStatus,
+            progress: this.userBook.progressStatus,
+            comment: this.userBook.comment,
+        });
     }
 
     onEditClick(form: NgForm): void {

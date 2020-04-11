@@ -20,13 +20,14 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <mat-form-field class='dialog-input'>
-                <input matInput type="text" placeholder="Optional Comment" formControlName="comment">
+            <mat-form-field class='dialog-input' appearance="fill">
+                <mat-label>Optional Comment</mat-label>
+                <textarea formControlName="comment" matInput></textarea>
             </mat-form-field>
         </form>
     </div>
 </div>
 <div mat-dialog-actions>
-    <button mat-flat-button color="accent" [disabled]="!selectForm.valid" (click)="onAdditionClick(addForm)">Add Book</button>
+    <button mat-flat-button color="accent" [disabled]="!addForm.valid" (click)="onAdditionClick(addForm)">Add Book</button>
     <button mat-flat-button (click)="onCancelClick()">Cancel</button>
 </div>

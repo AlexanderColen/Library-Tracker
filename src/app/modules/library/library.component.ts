@@ -76,6 +76,9 @@ export class LibraryComponent implements OnInit {
         this.userBookService.editUserBook(userBook)
             .subscribe(res => {
                             this.userBookCollection[index] = res;
+                            this.snackBar.open('Book successfully edited.', 'Dismiss', {
+                                duration: 2000,
+                            });
                         },
                         err => {
                             this.snackBar.open('Something went wrong while editing the book.', 'Dismiss', {
@@ -95,7 +98,7 @@ export class LibraryComponent implements OnInit {
                             this.userBookCollection.splice(index, 1);
                             this.snackBar.open('Book successfully deleted.', 'Dismiss', {
                                 duration: 2000,
-                             });
+                            });
                         },
                         err => {
                             this.snackBar.open('Something went wrong while deleting the book.', 'Dismiss', {
