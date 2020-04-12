@@ -1,1 +1,22 @@
 // Profile Page SCSS
+// Desktop specific
+@media only screen and (min-width: 768px) {
+    .charts-container {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-content: center;
+
+        div {
+            display: grid;
+
+            h3 {
+                justify-self: center;
+            }
+        }
+    }
+
+    .charts-container > * {
+        width: 50%;
+    }
+}

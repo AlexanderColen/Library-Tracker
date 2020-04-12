@@ -58,4 +58,12 @@ export class UserBookService {
     editUserBook(userBook: UserBook): Observable<any> {
         return this.httpClient.put(this.userBooksApi + userBook.id, userBook);
     }
+
+    /**
+     * Get statistics for a particular User.
+     * @param username The username of the User.
+     */
+    getStatisticsForUser(username: string): Observable<any> {
+        return this.httpClient.get(this.userBooksApi + 'user/' + username + '/statistics');
+    }
 }

@@ -4,7 +4,28 @@
     <div class="loading-shade" *ngIf="loading">
         <mat-spinner *ngIf="loading"></mat-spinner>
     </div>
-    <mat-card *ngIf="username">
-        <p>Username: {{ username }}</p>
+    <mat-card *ngIf="username && !unknownUser">
+        <h2>Book Statistics</h2>
+        <p>Total books: <strong>{{ totalBooks }}</strong></p>
+        <p>Total pages read: <strong>{{ totalPages }}</strong></p>
+        <p><em>Average pages per book: {{ totalPages / totalBooks }}</em></p>
+        <div *ngIf='!loading' class="charts-container">
+            <div>
+                <h3>Book Progress</h3>
+                <canvas baseChart
+                        [data]="progressChartData"
+                        [labels]="progressChartLabels"
+                        [chartType]="progressChartType">
+                </canvas>
+            </div>
+            <div>
+                <h3>Book Locations</h3>
+                <canvas baseChart
+                        [data]="locationChartData"
+                        [labels]="locationChartLabels"
+                        [chartType]="locationChartType">
+                </canvas>
+            </div>
+        </div>
     </mat-card>
 </div>

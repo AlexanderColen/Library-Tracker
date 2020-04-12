@@ -33,6 +33,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { BookService } from './services/book.service';
 import { SearchService } from './services/search.service';
 import { UserBookService } from './services/userbook.service';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
     declarations: [
@@ -58,6 +59,7 @@ import { UserBookService } from './services/userbook.service';
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
+        ChartsModule,
         FormsModule,
         HttpClientModule,
         MatExpansionModule,
