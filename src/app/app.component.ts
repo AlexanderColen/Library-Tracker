@@ -13,7 +13,7 @@ export class AppComponent {
     events: string[] = [];
     opened: any;
 
-    @ViewChild('sidenav', {static: false})
+    @ViewChild('sidenav')
     public sidenav: MatSidenav;
 
     constructor(private router: Router,
