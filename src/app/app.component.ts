@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDialog, MatSidenav } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { LogoutDialogComponent } from './modules/dialogs/logout.dialog.component';
 import { AuthenticationService } from './services/authentication.service';
