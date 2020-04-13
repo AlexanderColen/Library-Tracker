@@ -12,7 +12,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = localStorage.getItem('token');
-        if (token && request.url.includes('localhost')) {
+        if (token) {
             console.log('Attaching token to request...');
             request = request.clone({
                 setHeaders: {

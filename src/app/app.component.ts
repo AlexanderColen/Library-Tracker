@@ -11,12 +11,13 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent {
     events: string[] = [];
+    opened: any;
 
     @ViewChild('sidenav', {static: false})
     public sidenav: MatSidenav;
 
     constructor(private router: Router,
-                private authService: AuthenticationService,
+                public authService: AuthenticationService,
                 private dialog: MatDialog) { }
 
     navigate(destination: string): void {

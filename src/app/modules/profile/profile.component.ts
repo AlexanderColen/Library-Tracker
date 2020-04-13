@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+    math = Math;
     username: string;
     loading = true;
     unknownUser = false;

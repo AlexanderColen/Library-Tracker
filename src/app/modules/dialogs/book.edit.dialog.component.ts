@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UserBook } from 'src/app/models/UserBook';
 
@@ -42,7 +42,7 @@ export class BookEditDialogComponent {
         });
     }
 
-    onEditClick(form: NgForm): void {
+    onEditClick(form: FormGroup): void {
         this.dialogRef.close(['EDIT', form.value.location, form.value.progress, form.value.comment]);
     }
 

@@ -8,7 +8,7 @@
         <h2>Book Statistics</h2>
         <p>Total books: <strong>{{ totalBooks }}</strong></p>
         <p>Total pages read: <strong>{{ totalPages }}</strong></p>
-        <p><em>Average pages per book: {{ totalPages / totalBooks }}</em></p>
+        <p><em>Average pages per book: {{ math.round(totalPages / totalBooks) }}</em></p>
         <div *ngIf='!loading' class="charts-container">
             <div>
                 <h3>Book Progress</h3>
