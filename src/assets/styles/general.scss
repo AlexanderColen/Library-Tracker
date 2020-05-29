@@ -10,7 +10,8 @@
     flex-flow: column wrap;
 }
 
-.container > * {
+.container > *,
+table {
     width: 100%;
 }
 

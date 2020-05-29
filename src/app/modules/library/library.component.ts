@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { MenuOption } from 'src/app/models/MenuOption';
 import { UserBook } from 'src/app/models/UserBook';
 import { UserBookService } from 'src/app/services/userbook.service';
@@ -14,25 +16,48 @@ import { DeletionDialogComponent } from '../dialogs/deletion.dialog.component';
     templateUrl: './library.component.html',
     styleUrls: ['./library.component.scss']
 })
-export class LibraryComponent implements OnInit {
+export class LibraryComponent implements OnInit, AfterViewInit {
+    loading = false;
     username: string;
     userBookCollection: UserBook[];
-    loading = false;
     shownUserBooks: UserBook[];
-    menuOptions: MenuOption[] = [
+    // Table properties.
+    dataSource = new MatTableDataSource<UserBook>();
+    displayedColumns: string[] = ['isbn', 'title', 'author', 'pages', 'location', 'progress', 'comment', 'edit', 'delete'];
+    // Filter properties.
+    filterOptionsForm: FormGroup;
+    locationStatusMenuOptions: MenuOption[] = [
         { value: 'ALL', viewValue: 'All' },
         { value: 'OWNED', viewValue: 'Owned' },
         { value: 'LOANED', viewValue: 'Loaned Out' },
         { value: 'BORROWED', viewValue: 'Borrowed' },
         { value: 'WISHED', viewValue: 'Wishlist' },
     ];
+    progressStatusMenuOptions: MenuOption[] = [
+        { value: 'ALL', viewValue: 'All' },
+        { value: 'READ', viewValue: 'Read' },
+        { value: 'UNREAD', viewValue: 'Unread' },
+        { value: 'READING', viewValue: 'Reading' },
+        { value: 'PLAN_TO_READ', viewValue: 'Planning To Read' },
+        { value: 'ABANDONED', viewValue: 'Stopped Reading' },
+    ];
+    selectedLocationStatus = 'ALL';
+    selectedProgressStatus = 'ALL';
+    // View properties.
+    viewToggle = 'CARD';
+    listViewVisible = false;
+    cardViewVisible = true;
+    @ViewChild(MatSort) sort: MatSort;
 
     constructor(private userBookService: UserBookService,
-                private router: Router,
                 private titleService: Title,
                 private dialog: MatDialog,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private formBuilder: FormBuilder) {
         this.titleService.setTitle('Book Collection - Library Tracker');
+        this.filterOptionsForm = this.formBuilder.group({
+            filterCriteria : [null, null]
+        });
     }
 
     ngOnInit() {
@@ -41,6 +66,7 @@ export class LibraryComponent implements OnInit {
         this.userBookService.getUserBooksForUser(localStorage.getItem('userId'))
             .subscribe(res => { this.userBookCollection = res;
                                 this.shownUserBooks = res;
+                                this.dataSource.data = res as UserBook[];
                                 this.loading = false;
                         },
                         err => { this.snackBar.open('Something went wrong while fetching the books.', 'Dismiss', {
@@ -51,21 +77,90 @@ export class LibraryComponent implements OnInit {
                         });
     }
 
+    ngAfterViewInit() {
+        this.dataSource.sort = this.sort;
+    }
+
     /**
-     * Displays the correct books based on what filter was activated.
-     * @param event The event thrown by changing the menuOptions select.
+     * Change the display view from card to table or vice versa.
+     * @param event The event thrown by changing the view toggle button.
      */
-    displayBooks(event: any): void {
+    ChangeView(event: any): void {
+        this.cardViewVisible = event.value === 'CARD' ? true : false;
+        this.listViewVisible = event.value === 'LIST' ? true : false;
+    }
+
+    /**
+     * Displays the correct books based on what filters were activated.
+     * @param event The event thrown by changing the location/progress status menu options select.
+     */
+    displayBooks(event: any, filter: string, reset: boolean = false): void {
+        // Reset search criteria when changing these filters, but not when it gets called otherwise.
+        if (reset) {
+            this.filterOptionsForm.get('filterCriteria').setValue('');
+        }
+
         this.shownUserBooks = [];
-        if (event.value === 'ALL') {
-            this.shownUserBooks = this.userBookCollection;
+        let tempUserBooks: UserBook[] = [];
+
+        if (filter === 'PROGRESS') {
+            this.selectedProgressStatus = event.value;
+        } else if (filter === 'LOCATION') {
+            this.selectedLocationStatus = event.value;
+        }
+
+        // Start with filtering on progress.
+        if (this.selectedProgressStatus === 'ALL') {
+            tempUserBooks = this.userBookCollection;
         } else {
-            this.userBookCollection.forEach(book => {
-                if (book.locationStatus === event.value) {
-                    this.shownUserBooks.push(book);
+            this.userBookCollection.forEach(userBook => {
+                if (userBook.progressStatus === this.selectedProgressStatus) {
+                    tempUserBooks.push(userBook);
                 }
             });
         }
+
+        // Then filter remaining on location.
+        if (this.selectedLocationStatus === 'ALL') {
+            this.shownUserBooks = tempUserBooks;
+        } else {
+            tempUserBooks.forEach(userBook => {
+                if (userBook.locationStatus === this.selectedLocationStatus) {
+                    this.shownUserBooks.push(userBook);
+                }
+            });
+        }
+
+        // Also set it for the table data.
+        this.dataSource.data = this.shownUserBooks;
+    }
+
+    /**
+     * Filter books based on entered filter criteria. 
+     * @param event The event thrown by typing in the filter criteria input.
+     */
+    filterUserBooks(event: any): void {
+        const filteredBooks: UserBook[] = [];
+
+        this.displayBooks(null, null);
+
+        this.shownUserBooks.forEach(userBook => {
+            // Merge all searchable fields into one string while ignoring null values.
+            const userBookString = [userBook.book.isbn,
+                                    userBook.book.title,
+                                    userBook.book.author,
+                                    userBook.book.pages,
+                                    userBook.locationStatus,
+                                    userBook.progressStatus,
+                                    userBook.comment].join('').toLowerCase().trim();
+            // Lowercase the strings and trim to ignore extra spaces and capitalization before filtering.
+            if (userBookString.indexOf(event.target.value.toLowerCase().trim()) !== -1) {
+                filteredBooks.push(userBook);
+            }
+        });
+
+        this.shownUserBooks = filteredBooks;
+        this.dataSource.data = this.shownUserBooks;
     }
 
     /**

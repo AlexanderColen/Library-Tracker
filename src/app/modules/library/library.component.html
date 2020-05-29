@@ -3,14 +3,33 @@
     <div class="loading-shade" *ngIf="loading">
         <mat-spinner *ngIf="loading"></mat-spinner>
     </div>
-    <mat-form-field>
-        <mat-select [value]="menuOptions[0].value" placeholder="Choose books to display." (selectionChange)="displayBooks($event)">
-            <mat-option *ngFor="let option of menuOptions" [value]="option.value">
-            {{ option.viewValue }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <div class='books-collection' *ngIf="shownUserBooks">
+    <div class='filter-options'>
+        <mat-form-field>
+            <mat-select [value]="locationStatusMenuOptions[0].value" placeholder="Location Filter" (selectionChange)="displayBooks($event, 'LOCATION')">
+                <mat-option *ngFor="let option of locationStatusMenuOptions" [value]="option.value">
+                {{ option.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select [value]="progressStatusMenuOptions[0].value" placeholder="Progress Filter" (selectionChange)="displayBooks($event, 'PROGRESS')">
+                <mat-option *ngFor="let option of progressStatusMenuOptions" [value]="option.value">
+                {{ option.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <form [formGroup]="filterOptionsForm">
+            <mat-form-field class='dialog-input' appearance="fill">
+                <mat-label>Filter Criteria</mat-label>
+                <input matInput formControlName="filterCriteria" (keyup)="filterUserBooks($event)">
+            </mat-form-field>
+        </form>
+        <mat-button-toggle-group name="viewToggle" [(ngModel)]="viewToggle" (change)="ChangeView($event)">
+            <mat-button-toggle value="CARD" [disabled]='cardViewVisible'>Card</mat-button-toggle>
+            <mat-button-toggle value="LIST" [disabled]='listViewVisible'>List</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div class='books-collection' *ngIf="shownUserBooks && cardViewVisible">
         <mat-card class="card-book" *ngFor="let ub of shownUserBooks; let i = index">
             <p class='book-info book-isbn'><strong>ISBN:</strong> {{ ub.book.isbn ? ub.book.isbn : '?' }}</p>
             <p class='book-info book-title'><strong>Title:</strong> {{ ub.book.title ? ub.book.title : '?' }}</p>
@@ -19,11 +38,70 @@
             <p class='book-info book-progress'><strong>Progress:</strong> {{ ub.progressStatus }}</p>
             <img class='book-cover' [src]="ub.book.image ? ub.book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
             <button class='book-button book-left-button' mat-raised-button color="primary" (click)="openEditDialog(i, ub)">
-                <mat-icon>info</mat-icon>Edit Book
+                <mat-icon>create</mat-icon>Edit Book
             </button>
             <button class='book-button book-right-button' mat-raised-button color="accent" (click)="openDeletionDialog(i, ub)">
                 <mat-icon>delete_forever</mat-icon>Delete
             </button>
         </mat-card>
+    </div>
+    <div class='' *ngIf="shownUserBooks && listViewVisible">
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="isbn">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ISBN</th>
+                <td mat-cell *matCellDef="let userbook"> {{ userbook.book.isbn }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+                <td mat-cell *matCellDef="let userbook"> {{ userbook.book.title }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="author">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Author</th>
+                <td mat-cell *matCellDef="let userbook"> {{ userbook.book.author }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="pages">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Pages</th>
+                <td mat-cell *matCellDef="let userbook"> {{ userbook.book.pages }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+                <td mat-cell *matCellDef="let userbook"> {{ userbook.locationStatus }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="progress">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Progress</th>
+                <td mat-cell *matCellDef="let userbook"> {{ userbook.progressStatus }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="comment">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Comment</th>
+                <td mat-cell *matCellDef="let userbook"> {{ userbook.comment }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef>Edit</th>
+                <td mat-cell *matCellDef="let userbook; let i = index;">
+                    <button mat-raised-button color="primary" (click)="openEditDialog(i, userbook)">
+                        <mat-icon>create</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef>Delete</th>
+                <td mat-cell *matCellDef="let userbook; let i = index;">
+                    <button mat-raised-button color="accent" (click)="openDeletionDialog(i, userbook)">
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
     </div>
 </div>
