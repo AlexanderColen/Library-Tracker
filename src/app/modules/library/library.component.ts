@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { MenuOption } from 'src/app/models/MenuOption';
@@ -67,7 +66,7 @@ export class LibraryComponent implements OnInit {
         this.userBookService.getUserBooksForUser(localStorage.getItem('userId'))
             .subscribe(res => { this.userBookCollection = res;
                                 this.shownUserBooks = res;
-                                this.dataSource.data = this.shownUserBooks.slice() as UserBook[];
+                                this.dataSource.data = this.shownUserBooks.slice();
                                 this.loading = false;
                         },
                         err => { this.snackBar.open('Something went wrong while fetching the books.', 'Dismiss', {
