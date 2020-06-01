@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { MenuOption } from 'src/app/models/MenuOption';
@@ -16,7 +15,7 @@ import { DeletionDialogComponent } from '../dialogs/deletion.dialog.component';
     templateUrl: './library.component.html',
     styleUrls: ['./library.component.scss']
 })
-export class LibraryComponent implements OnInit, AfterViewInit {
+export class LibraryComponent implements OnInit {
     loading = false;
     username: string;
     userBookCollection: UserBook[];
@@ -47,7 +46,8 @@ export class LibraryComponent implements OnInit, AfterViewInit {
     viewToggle = 'CARD';
     listViewVisible = false;
     cardViewVisible = true;
-    @ViewChild(MatSort) sort: MatSort;
+    sortedOn: string;
+    sortOrder;
 
     constructor(private userBookService: UserBookService,
                 private titleService: Title,
@@ -66,7 +66,7 @@ export class LibraryComponent implements OnInit, AfterViewInit {
         this.userBookService.getUserBooksForUser(localStorage.getItem('userId'))
             .subscribe(res => { this.userBookCollection = res;
                                 this.shownUserBooks = res;
-                                this.dataSource.data = res as UserBook[];
+                                this.dataSource.data = this.shownUserBooks.slice();
                                 this.loading = false;
                         },
                         err => { this.snackBar.open('Something went wrong while fetching the books.', 'Dismiss', {
@@ -75,10 +75,6 @@ export class LibraryComponent implements OnInit, AfterViewInit {
                                  console.log(err);
                                  this.loading = false;
                         });
-    }
-
-    ngAfterViewInit() {
-        this.dataSource.sort = this.sort;
     }
 
     /**
@@ -136,7 +132,7 @@ export class LibraryComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Filter books based on entered filter criteria. 
+     * Filter books based on entered filter criteria.
      * @param event The event thrown by typing in the filter criteria input.
      */
     filterUserBooks(event: any): void {
@@ -164,11 +160,77 @@ export class LibraryComponent implements OnInit, AfterViewInit {
     }
 
     /**
+     * Sort the shown UserBooks on a certain column.
+     * @param column The column to sort on.
+     */
+    sortBooks(column: string): void {
+        // Reset to default sorted order.
+        if (this.sortOrder === 'descending') {
+            this.dataSource.data = this.shownUserBooks.slice();
+            this.sortedOn = null;
+            this.sortOrder = null;
+        } else {
+            // If sortedOn was already set to the column value, it means the data is sorted ascending and needs to be reversed.
+            if (column === this.sortedOn) {
+                this.dataSource.data = this.dataSource.data.reverse();
+                this.sortOrder = 'descending';
+            // Set sorted column and order to ascending.
+            } else {
+                this.sortedOn = column;
+                this.sortOrder = 'ascending';
+
+                // Sort the shown UserBooks on the specific column.
+                if (column === 'isbn') {
+                    this.dataSource.data = this.dataSource.data.sort((a, b) =>
+                        this.stringCompareWithNulls(a.book.isbn, b.book.isbn));
+                } else if (column === 'title') {
+                    this.dataSource.data = this.dataSource.data.sort((a, b) =>
+                        this.stringCompareWithNulls(a.book.title, b.book.title));
+                } else if (column === 'author') {
+                    this.dataSource.data = this.dataSource.data.sort((a, b) =>
+                        this.stringCompareWithNulls(a.book.author, b.book.author));
+                } else if (column === 'pages') {
+                    this.dataSource.data = this.dataSource.data.sort((a, b) =>
+                        a.book.pages - b.book.pages);
+                } else if (column === 'location') {
+                    this.dataSource.data = this.dataSource.data.sort((a, b) =>
+                        this.stringCompareWithNulls(a.locationStatus, b.locationStatus));
+                } else if (column === 'progress') {
+                    this.dataSource.data = this.dataSource.data.sort((a, b) =>
+                        this.stringCompareWithNulls(a.progressStatus, b.progressStatus));
+                } else if (column === 'comment') {
+                    // Custom sort for this one because of possible null values.
+                    this.dataSource.data = this.dataSource.data.sort((a, b) =>
+                        this.stringCompareWithNulls(a.comment, b.comment));
+                }
+            }
+        }
+    }
+
+    /**
+     * String comparer that takes null into account.
+     * @param a First string to compare to.
+     * @param b Second string to compare to.
+     * @returns 0, 1 or -1 indicating whether a should be above b or vice versa.
+     */
+    private stringCompareWithNulls(a: string, b: string): number {
+        if (a === b) {
+            return 0;
+        } else if (a === null) {
+            return 1;
+        } else if (b === null) {
+            return -1;
+        } else {
+            return a.localeCompare(b);
+        }
+    }
+
+    /**
      * Edit a UserBook for the logged in User.
      * @param index The index of the UserBook in the userBookCollection that needs to be edited.
      * @param userBook The UserBook that needs to be edited.
      */
-    editUserBook(index: number, userBook: UserBook) {
+    editUserBook(index: number, userBook: UserBook): void {
         this.userBookService.editUserBook(userBook)
             .subscribe(res => {
                             this.userBookCollection[index] = res;

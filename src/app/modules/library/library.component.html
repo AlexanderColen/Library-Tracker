@@ -29,79 +29,81 @@
             <mat-button-toggle value="LIST" [disabled]='listViewVisible'>List</mat-button-toggle>
         </mat-button-toggle-group>
     </div>
-    <div class='books-collection' *ngIf="shownUserBooks && cardViewVisible">
-        <mat-card class="card-book" *ngFor="let ub of shownUserBooks; let i = index">
-            <p class='book-info book-isbn'><strong>ISBN:</strong> {{ ub.book.isbn ? ub.book.isbn : '?' }}</p>
-            <p class='book-info book-title'><strong>Title:</strong> {{ ub.book.title ? ub.book.title : '?' }}</p>
-            <p class='book-info book-author'><strong>Author:</strong> {{ ub.book.author ? ub.book.author : '?' }}</p>
-            <p class='book-info book-status'><strong>Status:</strong> {{ ub.locationStatus }}</p>
-            <p class='book-info book-progress'><strong>Progress:</strong> {{ ub.progressStatus }}</p>
-            <img class='book-cover' [src]="ub.book.image ? ub.book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
-            <button class='book-button book-left-button' mat-raised-button color="primary" (click)="openEditDialog(i, ub)">
-                <mat-icon>create</mat-icon>Edit Book
-            </button>
-            <button class='book-button book-right-button' mat-raised-button color="accent" (click)="openDeletionDialog(i, ub)">
-                <mat-icon>delete_forever</mat-icon>Delete
-            </button>
-        </mat-card>
-    </div>
-    <div class='' *ngIf="shownUserBooks && listViewVisible">
-        <table mat-table [dataSource]="dataSource" matSort aria-describedby="heading">
-            <ng-container matColumnDef="isbn">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">ISBN</th>
-                <td mat-cell *matCellDef="let userbook"> {{ userbook.book.isbn }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="title">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">Title</th>
-                <td mat-cell *matCellDef="let userbook"> {{ userbook.book.title }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="author">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">Author</th>
-                <td mat-cell *matCellDef="let userbook"> {{ userbook.book.author }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="pages">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">Pages</th>
-                <td mat-cell *matCellDef="let userbook"> {{ userbook.book.pages }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="location">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">Location</th>
-                <td mat-cell *matCellDef="let userbook"> {{ userbook.locationStatus }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="progress">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">Progress</th>
-                <td mat-cell *matCellDef="let userbook"> {{ userbook.progressStatus }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="comment">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">Comment</th>
-                <td mat-cell *matCellDef="let userbook"> {{ userbook.comment }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="edit">
-                <th mat-header-cell *matHeaderCellDef scope="col">Edit</th>
-                <td mat-cell *matCellDef="let userbook; let i = index;">
-                    <button mat-raised-button color="primary" (click)="openEditDialog(i, userbook)">
-                        <mat-icon>create</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="delete">
-                <th mat-header-cell *matHeaderCellDef scope="col">Delete</th>
-                <td mat-cell *matCellDef="let userbook; let i = index;">
-                    <button mat-raised-button color="accent" (click)="openDeletionDialog(i, userbook)">
-                        <mat-icon>delete_forever</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+    <div *ngIf='shownUserBooks'>
+        <div class='books-collection' *ngIf="cardViewVisible">
+            <mat-card class="card-book" *ngFor="let ub of shownUserBooks; let i = index">
+                <p class='book-info book-isbn'><strong>ISBN:</strong> {{ ub.book.isbn ? ub.book.isbn : '?' }}</p>
+                <p class='book-info book-title'><strong>Title:</strong> {{ ub.book.title ? ub.book.title : '?' }}</p>
+                <p class='book-info book-author'><strong>Author:</strong> {{ ub.book.author ? ub.book.author : '?' }}</p>
+                <p class='book-info book-status'><strong>Status:</strong> {{ ub.locationStatus }}</p>
+                <p class='book-info book-progress'><strong>Progress:</strong> {{ ub.progressStatus }}</p>
+                <img class='book-cover' [src]="ub.book.image ? ub.book.image : '../../../assets/icons/book_black.svg'" alt="Book Cover Image">
+                <button class='book-button book-left-button' mat-raised-button color="primary" (click)="openEditDialog(i, ub)">
+                    <mat-icon>create</mat-icon>Edit Book
+                </button>
+                <button class='book-button book-right-button' mat-raised-button color="accent" (click)="openDeletionDialog(i, ub)">
+                    <mat-icon>delete_forever</mat-icon>Delete
+                </button>
+            </mat-card>
+        </div>
+        <div *ngIf="listViewVisible">
+            <table mat-table [dataSource]="dataSource" matSort aria-describedby="heading">
+                <ng-container matColumnDef="isbn">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" (click)="sortBooks('isbn')">ISBN</th>
+                    <td mat-cell *matCellDef="let userbook"> {{ userbook.book.isbn }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" (click)="sortBooks('title')">Title</th>
+                    <td mat-cell *matCellDef="let userbook"> {{ userbook.book.title }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="author">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" (click)="sortBooks('author')">Author</th>
+                    <td mat-cell *matCellDef="let userbook"> {{ userbook.book.author }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="pages">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" (click)="sortBooks('pages')">Pages</th>
+                    <td mat-cell *matCellDef="let userbook"> {{ userbook.book.pages }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="location">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" (click)="sortBooks('location')">Location</th>
+                    <td mat-cell *matCellDef="let userbook"> {{ userbook.locationStatus }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="progress">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" (click)="sortBooks('progress')">Progress</th>
+                    <td mat-cell *matCellDef="let userbook"> {{ userbook.progressStatus }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="comment">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" (click)="sortBooks('comment')">Comment</th>
+                    <td mat-cell *matCellDef="let userbook"> {{ userbook.comment }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef scope="col">Edit</th>
+                    <td mat-cell *matCellDef="let userbook; let i = index;">
+                        <button mat-raised-button color="primary" (click)="openEditDialog(i, userbook)">
+                            <mat-icon>create</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef scope="col">Delete</th>
+                    <td mat-cell *matCellDef="let userbook; let i = index;">
+                        <button mat-raised-button color="accent" (click)="openDeletionDialog(i, userbook)">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
     </div>
 </div>
